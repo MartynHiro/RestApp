@@ -5,13 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.sergey.exceptions.InvalidCredentialsException;
 import ru.sergey.exceptions.UnauthorizedUserException;
 import ru.sergey.services.Authorities;
 import ru.sergey.services.AuthorizationService;
-import ru.sergey.users.User;
 
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class AuthorizationController {
     AuthorizationService service;
 
     @GetMapping("/authorize")
-    public List<Authorities> getAuthorities(@RequestBody @Validated User user) {
-        return service.getAuthorities(user.getLogin(), user.getPassword());
+    public List<Authorities> getAuthorities(@RequestParam("user") String user, @RequestParam("password") String password) {
+        return service.getAuthorities(user, password);
     }
 
     //отсылает обратно клиенту HTTP-статус с кодом 400 и телом в виде сообщения из exception

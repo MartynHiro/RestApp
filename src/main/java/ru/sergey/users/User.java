@@ -1,12 +1,13 @@
 package ru.sergey.users;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.validation.annotation.Validated;
 
 //pojo объект для сохранения юзеров
+@Validated
 public class User {
     @Size(min = 3, max = 20)
     @NotBlank
@@ -21,9 +22,11 @@ public class User {
         this.password = password;
     }
 
+
     public String getLogin() {
         return login;
     }
+
     public String getPassword() {
         return password;
     }
